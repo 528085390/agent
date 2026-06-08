@@ -1,8 +1,6 @@
 spring:
   application:
     name: li-ai-agent
-  profiles:
-    active: local
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/agent?currentSchema=public
 #    username: postgres
