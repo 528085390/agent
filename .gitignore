@@ -2,6 +2,8 @@
 application-local.yaml
 tmp
 target/
+li-ai-agent-frontend
+li-image-search-mcp-server
 
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
