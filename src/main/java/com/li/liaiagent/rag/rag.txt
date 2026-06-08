@@ -1,0 +1,22 @@
+rag
+建立索引
+原始文档 - 预处理 - 切片 - 向量化 - 存储
+检索生成
+用户问题 - 向量化 - 向量数据库检索切片 - 精排出最相关切片 - 上下文拼接增强提示词 - 大模型输出
+
+etl
+抽取 - 从各种数据源（如数据库、API、文件系统）中提取原始数据。
+转换 - 对提取的数据进行清洗、格式化和结构化，以适应后续处理的需求。
+加载 - 将转换后的数据加载到目标系统中，如数据库、数据仓库。
+
+本地文档.md -
+ResourcePatternResolver 文档加载器将文档读取为 resource -
+由 MarkdownDocumentReaderConfig 配置的规则生成 MarkdownDocumentReader -
+MarkdownDocumentReader 读取 resource 转换为 Document 文档列表 并且实现了内容的切片 -
+SimpleVectorStore 实现了内容切片的向量化和存储 变成一个向量数据库 -
+QuestionAnswerAdvisor 基础的查询增强 应用 SimpleVectorStore 从向量数据库中检索相关文档，基于得分取得切片，拼接成上下文交给大模型
+
+上传到服务器的文档 -
+DashScopeApi 用于连接云文档 -
+DocumentRetriever 文档检索器，基于 DashScopeApi 从云文档中检索相关文档 -
+RetrievalAugmentationAdvisor 检索增强顾问，可以绑定检索前（上下文查询增强器），检索中（文档检索器），检索后的组件 -

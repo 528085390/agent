@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: li-image-search-mcp-server
+  profiles:
+    active: sse
+
+server:
+  port: 8100
+
+pexels:
+  api-key: ${PEXELS_API_KEY:qnUkbRykgw0oqKO6EX0XvTApCeDI5swojTJfm4WVwwIoHY1jvvCILPxj}

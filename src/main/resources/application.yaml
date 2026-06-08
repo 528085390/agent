@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: li-ai-agent
+  profiles:
+    active: local
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/agent?currentSchema=public
+#    username: postgres
+#    password: 123456
+
+  datasource:
+    url: jdbc:postgresql://pgm-7xv7ucb94gaczj4qxo.pg.cn-guangzhou.rds.aliyuncs.com:5432/li-ai-agent
+    username: agent
+    driver-class-name: org.postgresql.Driver
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+        initialize-schema: true
+    dashscope:
+      embedding:
+        options:
+          model: text-embedding-v2
+    chat:
+      options:
+        model: qwen-plus
+    mcp:
+      client:
+#        stdio:
+#          servers-configuration: classpath:mcp-servers.json
+#        sse:
+#          connections:
+#            server1:
+#                url: http://localhost:8100
+#        request-timeout: 30000
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+mybatis-plus:
+  type-handlers-package: com.li.liaiagent.pojo
+  configuration:
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开启SQL日志，便于调试
+    map-underscore-to-camel-case: true # 自动映射下划线命名到驼峰命名
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.li.liaiagent.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+
