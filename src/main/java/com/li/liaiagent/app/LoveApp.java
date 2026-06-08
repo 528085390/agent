@@ -28,6 +28,7 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -39,10 +40,11 @@ public class LoveApp {
 
     private ChatMemory chatMemory;
 
-
-    private static final String SYSTEM_PROMPT = "你是一个恋爱专家，帮助用户解决恋爱中的问题。";
     @Autowired
     private AppDocumentLoader appDocumentLoader;
+
+    private static final String SYSTEM_PROMPT = "你是一个恋爱专家，帮助用户解决恋爱中的问题。";
+
 
     public LoveApp(ChatModel dashscopeChatModel, ChatMemory chatMemory) {
         this.chatMemory = chatMemory;
@@ -88,6 +90,23 @@ public class LoveApp {
     }
 
     record Report(String title, List<String> suggestions) {
+    }
+
+    /**
+     * description: 流式聊天，用于实时返回聊天结果
+     *
+     * @param question       用户输入的问题
+     * @param conversationId 会话ID，用于关联聊天记录
+     */
+    public Flux<String> doChatByStream(String question, String conversationId) {
+        Flux<String> response = chatClient
+                .prompt()
+                .user(question)
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId).param("maxMessages", 5))
+                .advisors(new ReReadingAdvisor())
+                .stream()
+                .content();
+        return response;
     }
 
 

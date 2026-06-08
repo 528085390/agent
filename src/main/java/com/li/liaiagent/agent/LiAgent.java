@@ -24,7 +24,7 @@ public class LiAgent extends ToolCallAgent{
         String nextStepPrompt = "请根据用户的需求，决定下一步行动。你可以选择调用工具来获取信息或执行操作，或者直接给出答案。如果需要调用工具，请明确说明要调用哪个工具以及传递什么参数。";
         this.setNextStepPrompt(nextStepPrompt);
 
-        this.setMaxSteps(20);
+        this.setMaxSteps(10);
 
         //初始化大模型
         ChatClient chatClient = ChatClient.builder(dashscopeChatModel)
