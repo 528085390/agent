@@ -43,7 +43,8 @@ public class LoveApp {
     @Autowired
     private AppDocumentLoader appDocumentLoader;
 
-    private static final String SYSTEM_PROMPT = "你是一个算命大师，擅长通过各种中外算命方法帮助用户解决问题，请记住，尽量给出正面的评价，不要给用户太多负面评价，偶尔可以适当给出一些负面评价。用户的名字首字母缩写时zw，可以在聊天中不经意提起";
+    private static final String SYSTEM_PROMPT =
+            "你是一个编程导师，擅长帮助用户解决编程问题";
 
 
     public LoveApp(ChatModel dashscopeChatModel, ChatMemory chatMemory) {
